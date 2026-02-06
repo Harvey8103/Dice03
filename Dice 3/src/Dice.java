@@ -1,8 +1,21 @@
 /**
+ * V.0.0.1 - Created the basic class.
+ * V.0.0.2 - Remove some useless files.
  * V.0.1.0 - Finished the basic version of the game, where the user can guess the dice rolls and receive feedback on their guesses.
+ * V.0.1.1 - Added comments.
+ * V.0.1.2.1 - Correct the variable name.
+ * V.0.1.2.2 - Correct the array name.
+ * V.0.1.2.3 - Fixed the bug after change the variable and array name.
+ * V.1.0.0 - Fixed the bug of running the game.
+ * V.1.0.1.1 - Return funtion fixed
+ * V.1.0.1.2 - Added extra comments.
+ * V.1.0.1.3 - Final Version.
+ * 
  * Published Date: 2026-02-11
+ * 
  * To do: GUI can be added to make the game more interactive and visually appealing. Additionally, a scoring system can be implemented to track the user's performance over multiple rounds of the game.
- * Line 90 and 133 are the return counters for the number of attempts it took for the user to guess correctly, or -1 if they failed to guess within 10 attempts. These can be used to implement a scoring system.
+ * 
+ * Remark: Line 103 and 146 are the return counters for the number of attempts it took for the user to guess correctly, or -1 if they failed to guess within 10 attempts. These can be used to implement a scoring system.
 */
 
 import java.util.Random;
@@ -10,19 +23,19 @@ import java.util.Scanner;
 
 public class Dice {
     // This array will hold the values of the rolled dice
-    private int[] answer = new int[4];
+    private int[] secretCode = new int[4];
     // Random object to generate random numbers for the dice rolls
     private Random random = new Random();
     // This variable will track whether the user's guesses are correct
     private static boolean correct = false;
     
     //roll the dices
-    private void rollDices() {
+    private void generateCode() {
         // Generate random numbers between 1 and 6 for each of the four dice
-        answer[0] = random.nextInt(6) + 1;
-        answer[1] = random.nextInt(6) + 1;
-        answer[2] = random.nextInt(6) + 1;
-        answer[3] = random.nextInt(6) + 1;
+        secretCode[0] = random.nextInt(6) + 1;
+        secretCode[1] = random.nextInt(6) + 1;
+        secretCode[2] = random.nextInt(6) + 1;
+        secretCode[3] = random.nextInt(6) + 1;
     }
 
     // This method checks if a given string can be parsed as an integer
@@ -36,9 +49,9 @@ public class Dice {
     }
 
     // The main method where the game logic is implemented
-    public void main(String[] args) {
+    public static void main(String[] args) {
         Dice game = new Dice();
-        game.rollDices();
+        game.generateCode();
         Scanner scanner = new Scanner(System.in);
         
         // This counter will track the number of attempts the user has made to guess the dice rolls
@@ -85,7 +98,7 @@ public class Dice {
             }
             
             // Check if the user's guesses are correct
-            if (userInput[0] == game.answer[0] && userInput[1] == game.answer[1] && userInput[2] == game.answer[2] && userInput[3] == game.answer[3]) {
+            if (userInput[0] == game.secretCode[0] && userInput[1] == game.secretCode[1] && userInput[2] == game.secretCode[2] && userInput[3] == game.secretCode[3]) {
                 correct = true;
 //                return counter;
                 System.out.println("Congratulations! You guessed correctly!");
@@ -93,14 +106,14 @@ public class Dice {
                 int correctPositionCounter = 0;
                 int wrongPositionCounter = 0;
 
-                boolean[] answerUsed = new boolean[4];
+                boolean[] secretCodeUsed = new boolean[4];
                 boolean[] inputUsed = new boolean[4];
 
                 // First pass to count correct numbers in the correct position
                 for (int i = 0; i < 4; i++) {
-                    if (userInput[i] == game.answer[i]) {
+                    if (userInput[i] == game.secretCode[i]) {
                         correctPositionCounter++;
-                        answerUsed[i] = true;
+                        secretCodeUsed[i] = true;
                         inputUsed[i] = true;
                     }
                 }
@@ -109,9 +122,9 @@ public class Dice {
                 for (int i = 0; i < 4; i++) {
                     if (!inputUsed[i]) {
                         for (int j = 0; j < 4; j++) {
-                            if (!answerUsed[j] && userInput[i] == game.answer[j]) {
+                            if (!secretCodeUsed[j] && userInput[i] == game.secretCode[j]) {
                                 wrongPositionCounter++;
-                                answerUsed[j] = true;
+                                secretCodeUsed[j] = true;
                                 break;
                             }
                         }
@@ -124,11 +137,11 @@ public class Dice {
             }
         }
 
-        // If the user fails to guess correctly within 10 attempts, reveal the correct answers
-        System.out.println("Dice 1: " + game.answer[0]);
-        System.out.println("Dice 2: " + game.answer[1]);    
-        System.out.println("Dice 3: " + game.answer[2]);
-        System.out.println("Dice 4: " + game.answer[3]);
+        // If the user fails to guess correctly within 10 attempts, reveal the correct secretCodes
+        System.out.println("Dice 1: " + game.secretCode[0]);
+        System.out.println("Dice 2: " + game.secretCode[1]);    
+        System.out.println("Dice 3: " + game.secretCode[2]);
+        System.out.println("Dice 4: " + game.secretCode[3]);
         // Set counter to -1 to indicate that the user failed to guess correctly within 10 attempts
 //        return -1;
     }
